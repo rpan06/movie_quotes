@@ -1,4 +1,5 @@
 export default {
+    GET_MOVIE_QUOTE: 'get_movie_quote',
     SIGN_UP: 'sign_up',
     SIGN_IN: 'sign_in',
     SIGN_OUT: 'sign_out',

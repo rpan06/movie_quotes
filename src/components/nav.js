@@ -1,7 +1,10 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
+import {connect} from 'react-redux';
+import {signOut} from '../actions';
 
-export default class Nav extends Component {
+
+class Nav extends Component {
     render(){
 
         const navStyle = {
@@ -35,9 +38,14 @@ export default class Nav extends Component {
                         <li>
                             <Link to="/sign-up">Sign Up</Link>
                         </li>
+                        <li>
+                            <button className="btn red darken-2" onClick={this.props.signOut}>Sign Out</button>
+                        </li>
                     </ul>
                 </div>
             </nav>
         )
     }
 }
+
+export default connect(null, {signOut})(Nav)

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Field, reduxForm} from 'redux-form';
 import { connect } from 'react-redux';
-import { signIn } from '../actions';
+import { signIn, signInError } from '../actions';
 import {renderInput} from '../helpers';
 
 class SignIn extends Component {
@@ -10,9 +10,9 @@ class SignIn extends Component {
         this.props.signIn(values);
     }
     render(){
-        console.log('Sign In Props:', this.props);
+        // console.log('Sign In Props:', this.props);
 
-        const {handleSubmit} = this.props;
+        const {handleSubmit, authError} = this.props;
 
         return(
             <div className="container">
@@ -24,6 +24,7 @@ class SignIn extends Component {
                     <div className="row">
                         <div className="col s12 right-align">
                             <button className="btn blue">Sign In</button>
+                            <p className="red-text text-darken-2">{authError}</p>
                         </div>
                     </div>
                 </form>
@@ -33,7 +34,7 @@ class SignIn extends Component {
 }
 
 function validate(values){
-    const {email, password, confirmPassword} = values;
+    const {email, password} = values;
     const errors = {};
     if (!email) {
         errors.email = 'Please enter your email address';
@@ -49,6 +50,14 @@ SignIn = reduxForm({
     validate: validate
 })(SignIn);
 
-export default connect(null, {
-    signIn
+function mapStateToProps(state){
+    return{
+        //can't use error because redux form is already using it
+        authError: state.user.signInError
+    }
+}
+
+export default connect(mapStateToProps, {
+    signIn,
+    signInError
 })(SignIn)
